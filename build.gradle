@@ -1,0 +1,36 @@
+buildscript {
+    ext { //build.gradle에서 사용하는 전역변수 설정
+        springBootVersion = '2.1.7.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+//아래 4개는 자바와 스프링부트를 사용하기 위한 필수 plugin들
+apply plugin : 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management' //스프링부트의 의존성들을 관리해주는 플러그인
+
+group 'org.james'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
+
+//각종 의존성(라이브러리)들을 어떤 원격저장소에서 받을지를 지정
+repositories {
+    mavenCentral() //가장많이 사용하는 저장소인데 개발자 본인이 만든 라이브러리를 업로드하는 것이 힘들어 점점 공유가 안됨
+    jcenter() //위의 문제를 해결하여 간단하게 업로드 가능해서 최근 많이 사용하는 저장소
+}
+
+//의존성은 특정 버전을 명시하지 않아야 맨위의 springBootVersion 선언한 버전을 따라간다.
+//이렇게 하면 버전관리가 용이하다.
+dependencies {
+    compileOnly("org.springframework.boot:spring-boot-starter-web")
+    testCompileOnly("org.springframework.boot:spring-boot-starter-test")
+}
